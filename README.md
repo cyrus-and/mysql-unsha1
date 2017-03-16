@@ -11,12 +11,13 @@ certain circumstances without knowing the cleartext password when the [Secure
 Password Authentication] authentication plugin (aka `mysql_native_password`) is
 used.
 
-The main prerequisites are:
+The main prerequisites are at least:
 
-- to know the hashed password for a certain user (`password` column of the
-  `mysql.user` table);
+- to obtain a read-only access to the `mysql.user` table in the target database
+  in order to fetch the hashed password for a given user;
 
-- to be able to sniff a successful authentication handshake (i.e., no SSL).
+- to be able to sniff a successful authentication handshake performed by the
+  aforementioned user (i.e., no SSL).
 
 MySQL server passwords
 ----------------------
@@ -97,7 +98,7 @@ To ease the reproducibility of the exploit, this PoC provides two tools:
 - a patch for MySQL client which allows to treat the prompted passwords as SHA1
   digests instead of cleartexts.
 
-### Build the sniffer
+### The sniffer
 
 To build `mysql-unsha1-sniff` just run `make` (or `make static` to produce a
 statically linked executable). The Makefile will look for the `uthash.h` file in
@@ -125,9 +126,9 @@ Once a successful authentication handshake is captured the output will be like:
 If no account information are provided, the tool will only display the salt and
 the session password.
 
-### Build a patched MySQL client
+### The patched MySQL client
 
-This may take some time:
+This may take some time and will require a certain amount of free disk space:
 
 1. download and extract the MySQL source code at revision
    `23032807537d8dd8ee4ec1c4d40f0633cd4e12f9`:
@@ -147,8 +148,8 @@ This may take some time:
         cmake -DDOWNLOAD_BOOST=1 -DWITH_BOOST=boost -DWITHOUT_SERVER:BOOL=ON ..
         make -j$(nproc)
 
-4. the client executable will be in `client/mysql`, optionally install it
-   globally and delete the whole source code:
+4. the client executable will be created at `client/mysql`, optionally install
+   it globally and delete the whole source code to save some space:
 
         sudo cp client/mysql /usr/local/bin/mysql-unsha1
 

@@ -61,7 +61,7 @@ authentication [handshake] continues as follows (simplified):
         x := SHA1(password) XOR SHA1(s + SHA1(SHA1(password)))
 
     where `password` is the cleartext password as provided by the user and `+`
-    is a mere string concatenation operator.
+    is a mere string concatenation operator;
 
 3. the server can verify the *challenge* and authenticate the client if:
 
@@ -89,34 +89,35 @@ The first-stage SHA1 can be obtained as follows:
 Tools
 -----
 
-To ease the reproducibility of this exploit this PoC provides two tools:
+To ease the reproducibility of the exploit, this PoC provides two tools:
 
 - a simple sniffer to extract and check the handshake information either live or
   offline from a PCAP file;
 
 - a patch for MySQL client which allows to treat the prompted passwords as SHA1
-  digests instead of cleartext.
+  digests instead of cleartexts.
 
 ### Build the sniffer
 
-To produce `mysql-unsha1-sniff` just run `make` (or `make static` to produce a
+To build `mysql-unsha1-sniff` just run `make` (or `make static` to produce a
 statically linked executable). The Makefile will look for the `uthash.h` file in
 this directory and will download it if not found.
 
-Run `mysql-unsha1-sniff` without arguments to show the usage message.
+Run `mysql-unsha1-sniff` without arguments to display the usage message.
 
-According to the previous example:
+In accordance with the previous example:
 
     sudo ./mysql-unsha1-sniff -i lo 127.0.0.1 3306 2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19:root
 
-If no account information is provided the tool will only display the salt and
+If no account information are provided, the tool will only display the salt and
 the session password.
 
 ### Build a patched MySQL client
 
 This may take some time:
 
-1. download and extract the MySQL source code:
+1. download and extract the MySQL source code at revision
+   `23032807537d8dd8ee4ec1c4d40f0633cd4e12f9`:
 
         wget https://github.com/mysql/mysql-server/archive/23032807537d8dd8ee4ec1c4d40f0633cd4e12f9.zip
         unzip 23032807537d8dd8ee4ec1c4d40f0633cd4e12f9.zip
@@ -126,7 +127,7 @@ This may take some time:
 
         patch -p1 </path/to/mysql-server-unsha1.patch
 
-3. build the client only with:
+3. build (without server) with:
 
         mkdir build
         cd build
@@ -138,9 +139,11 @@ This may take some time:
 
         sudo cp client/mysql /usr/local/bin/mysql-unsha1
 
-Use `mysql-unsha1` as the regular MySQL client, just remeber that the
-`--password[=password], -p[password]` option now reuqires a 40-digit hexadecimal
-SHA1 string. According to the previous example:
+Use `mysql-unsha1` as the original MySQL client, just remember that the
+`--password[=password], -p[password]` option now requires a 40-digit hexadecimal
+SHA1 string.
+
+In accordance with the previous example:
 
     mysql-unsha1 -h 127.0.0.1 -P 3306 -u root --password=5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8
 

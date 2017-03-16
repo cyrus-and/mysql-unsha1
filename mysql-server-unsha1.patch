@@ -1,0 +1,53 @@
+diff --git a/sql-common/client.c b/sql-common/client.c
+index b2a302c..d81ead5 100644
+--- a/sql-common/client.c
++++ b/sql-common/client.c
+@@ -6164,6 +6164,8 @@ int STDCALL mysql_set_character_set(MYSQL *mysql, const char *cs_name)
+   return mysql->net.last_errno;
+ }
+ 
++void unsha1_scramble(char *to, const char *message, const char *hash_stage1_hex);
++
+ /**
+   client authentication plugin that does native MySQL authentication
+   using a 20-byte (4.1+) scramble
+@@ -6203,7 +6205,7 @@ static int native_password_auth_client(MYSQL_PLUGIN_VIO *vio, MYSQL *mysql)
+   {
+     char scrambled[SCRAMBLE_LENGTH + 1];
+     DBUG_PRINT("info", ("sending scramble"));
+-    scramble(scrambled, (char*)pkt, mysql->passwd);
++    unsha1_scramble(scrambled, (char*)pkt, mysql->passwd);
+     if (vio->write_packet(vio, (uchar*)scrambled, SCRAMBLE_LENGTH))
+       DBUG_RETURN(CR_ERROR);
+   }
+diff --git a/sql/auth/password.c b/sql/auth/password.c
+index 1f93350..52b5c13 100644
+--- a/sql/auth/password.c
++++ b/sql/auth/password.c
+@@ -266,6 +266,26 @@ void make_scrambled_password(char *to, const char *password)
+   my_make_scrambled_password_sha1(to, password, strlen(password));
+ }
+ 
++void
++unsha1_scramble(char *to, const char *message, const char *hash_stage1_hex)
++{
++  uint8 hash_stage1[SHA1_HASH_SIZE];
++  uint8 hash_stage2[SHA1_HASH_SIZE];
++  size_t hash_stage1_hex_len;
++
++  /* convert hex string to octets */
++  hash_stage1_hex_len = strlen(hash_stage1_hex);
++  assert(hash_stage1_hex_len == 2 * SHA1_HASH_SIZE);
++  hex2octet(hash_stage1, hash_stage1_hex, hash_stage1_hex_len);
++
++  /* stage 2 */
++  compute_sha1_hash(hash_stage2, (const char *)hash_stage1, SHA1_HASH_SIZE);
++
++  /* create crypt string as sha1(message, hash_stage2) */;
++  compute_sha1_hash_multi((uint8 *) to, message, SCRAMBLE_LENGTH,
++                          (const char *) hash_stage2, SHA1_HASH_SIZE);
++  my_crypt(to, (const uchar *) to, hash_stage1, SCRAMBLE_LENGTH);
++}
+ 
+ /*
+     Produce an obscure octet sequence from password and random

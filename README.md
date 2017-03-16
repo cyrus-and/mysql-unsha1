@@ -151,6 +151,8 @@ This may take some time and will require a certain amount of free disk space:
    it globally and delete the whole source code to save some space:
 
         sudo cp client/mysql /usr/local/bin/mysql-unsha1
+        cd ../..
+        rm -fr mysql-server-mysql-5.7.17
 
 Use `mysql-unsha1` as the original MySQL client, just remember that the
 `--password[=password], -p[password]` option now requires a 40-digit hexadecimal

@@ -60,8 +60,8 @@ authentication [handshake] continues as follows (simplified):
 
         x := SHA1(password) XOR SHA1(s + SHA1(SHA1(password)))
 
-   where `password` is the cleartext password as provided by the user and `+` is
-   a mere string concatenation operator.
+    where `password` is the cleartext password as provided by the user and `+`
+    is a mere string concatenation operator.
 
 3. the server can verify the *challenge* and authenticate the client if:
 

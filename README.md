@@ -130,12 +130,11 @@ the session password.
 
 This may take some time and will require a certain amount of free disk space:
 
-1. download and extract the MySQL source code at revision
-   `23032807537d8dd8ee4ec1c4d40f0633cd4e12f9`:
+1. download and extract the MySQL source code:
 
-        wget https://github.com/mysql/mysql-server/archive/23032807537d8dd8ee4ec1c4d40f0633cd4e12f9.zip
-        unzip 23032807537d8dd8ee4ec1c4d40f0633cd4e12f9.zip
-        cd mysql-server-23032807537d8dd8ee4ec1c4d40f0633cd4e12f9/
+        wget https://github.com/mysql/mysql-server/archive/mysql-5.7.17.tar.gz
+        tar xf mysql-5.7.17.tar.gz
+        cd mysql-server-mysql-5.7.17
 
 2. apply the patch:
 

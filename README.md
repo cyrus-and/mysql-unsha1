@@ -33,7 +33,7 @@ By default, passwords are stored in the `mysql.user` table and are hashed using
 the `PASSWORD` function which is just a two-stage SHA1 digest:
 
 ```
-mysql> SELECT DISTINCT password FROM mysql.user WHERE user = "root";
+mysql> SELECT DISTINCT password FROM mysql.user WHERE user = 'root';
 *2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19
 
 mysql> SELECT PASSWORD('password');

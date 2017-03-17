@@ -17,7 +17,7 @@ The main prerequisites are at least:
   in order to fetch the hashed password for a given user;
 
 - to be able to sniff a successful authentication handshake performed by the
-  aforementioned user (i.e., no SSL).
+  aforementioned user (i.e., no [authentication via SSL]).
 
 MySQL server passwords
 ----------------------
@@ -177,4 +177,5 @@ and `2470c0c06dee42fd1618bb99005adca2ec9d1e19` is the hashed password stored in
 the `mysql.user` table.
 
 [Secure Password Authentication]: https://dev.mysql.com/doc/internals/en/secure-password-authentication.html
+[authentication via SSL]: https://dev.mysql.com/doc/internals/en/ssl.html
 [handshake]: https://dev.mysql.com/doc/internals/en/plain-handshake.html

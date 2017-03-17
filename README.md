@@ -27,13 +27,13 @@ By default, passwords are stored in the `mysql.user` table and are hashed using
 the `PASSWORD` function which is just a two-stage SHA1 digest:
 
 ```
-> SELECT DISTINCT password FROM mysql.user WHERE user = "root";
+mysql> SELECT DISTINCT password FROM mysql.user WHERE user = "root";
 *2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19
 
-> SELECT PASSWORD('password');
+mysql> SELECT PASSWORD('password');
 *2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19
 
-> SELECT SHA1(UNHEX(SHA1('password')));
+mysql> SELECT SHA1(UNHEX(SHA1('password')));
 2470c0c06dee42fd1618bb99005adca2ec9d1e19
 ```
 
@@ -154,7 +154,7 @@ In accordance with the previous example:
 Where:
 
 ```
-> SELECT SHA1(UNHEX('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'));
+mysql> SELECT SHA1(UNHEX('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'));
 2470c0c06dee42fd1618bb99005adca2ec9d1e19
 ```
 

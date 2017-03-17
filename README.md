@@ -117,7 +117,8 @@ the session password.
 
 ### The patched MySQL client
 
-This may take some time and will require a certain amount of free disk space:
+Building the MySQL client may take some time and requires a certain amount of
+free disk space:
 
 1. download and extract the MySQL source code:
 

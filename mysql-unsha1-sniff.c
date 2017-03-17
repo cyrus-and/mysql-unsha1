@@ -166,7 +166,7 @@ static void pkt_callback(u_char *user, const struct pcap_pkthdr *pkt_header, con
     /* insert if not present */
     HASH_FIND(hh, attempts, &attempt_key, sizeof(struct attempt_key), attempt);
     if (!attempt) {
-        printf("[+] Traffic from a new client detected\n");
+        printf("[*] Traffic from a new client detected\n");
         attempt = calloc(1, sizeof(struct attempt));
         assert(attempt);
         attempt->key = attempt_key;
@@ -218,7 +218,7 @@ static void pkt_callback(u_char *user, const struct pcap_pkthdr *pkt_header, con
         memcpy(attempt->salt + 8, todo, 12);
 
         /* next */
-        printf("[+] Packet 'Server Greeting' received\n");
+        printf("[*] Packet 'Server Greeting' received\n");
         attempt->expect++;
         break;
 
@@ -250,7 +250,7 @@ static void pkt_callback(u_char *user, const struct pcap_pkthdr *pkt_header, con
         memcpy(attempt->password, todo, SHA_DIGEST_LENGTH);
 
         /* next */
-        printf("[+] Packet 'Login Request' received\n");
+        printf("[*] Packet 'Login Request' received\n");
         attempt->expect++;
 
         /* done */

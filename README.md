@@ -11,13 +11,14 @@ certain circumstances without knowing the cleartext password when the [Secure
 Password Authentication] authentication plugin (aka `mysql_native_password`) is
 used.
 
-The main prerequisites are at least:
+Preconditions are:
 
 - to obtain a read-only access to the `mysql.user` table in the target database
   in order to fetch the hashed password for a given user;
 
 - to be able to sniff a successful authentication handshake performed by the
-  aforementioned user (i.e., no [authentication via SSL]).
+  aforementioned user (i.e., [authentication via SSL] would nullify this
+  attempt).
 
 MySQL server passwords
 ----------------------

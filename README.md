@@ -16,7 +16,7 @@ Preconditions are:
 - to obtain a read-only access to the `mysql.user` table in the target database
   in order to fetch the hashed password for a given user;
 
-- to be able to sniff a successful authentication handshake performed by the
+- to be able to intercept a successful authentication handshake performed by the
   aforementioned user (i.e., [authentication via SSL] would nullify this
   attempt).
 
@@ -76,7 +76,7 @@ Let:
   `SHA1(SHA1(password))`);
 
 - `s` and `x` be the salt and the session password respectively obtained from
-   the sniffed handshake.
+   the intercepted handshake.
 
 The first-stage SHA1 can be obtained as follows:
 

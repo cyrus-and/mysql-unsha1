@@ -20,6 +20,12 @@ Preconditions are:
   aforementioned user (i.e., [authentication via SSL] would nullify this
   attempt).
 
+**Note:** This is not a bug nor a vulnerability in MySQL (this is hardly an
+*exploit* actually), it is just a direct consequence of how the authentication
+protocol works. If an attacker is able to satisfy the above points then the
+whole system is probably already compromised. Yet this exploit may offer an
+alternative approach to obtain a proper authenticated access to a MySQL server.
+
 MySQL server passwords
 ----------------------
 

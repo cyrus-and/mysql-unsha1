@@ -8,8 +8,8 @@ Abstract
 
 This PoC shows how it is possible to authenticate against a MySQL server under
 certain circumstances without knowing the cleartext password when the [Secure
-Password Authentication] authentication plugin (aka `mysql_native_password`) is
-used.
+Password Authentication] authentication plugin (aka `mysql_native_password`, the
+default method) is used.
 
 Preconditions are:
 

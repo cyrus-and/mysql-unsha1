@@ -63,6 +63,10 @@ authentication [handshake] continues as follows (simplified):
 
         SHA1(x XOR SHA1(s + SHA1(SHA1(password)))) = SHA1(SHA1(password))
 
+    where `SHA1(SHA1(password))` is the two-stage SHA1 digest of the password,
+    stored in the `mysql.user` table; the server does not know the cleartext
+    password nor its SHA1 digest.
+
 The exploit
 -----------
 
